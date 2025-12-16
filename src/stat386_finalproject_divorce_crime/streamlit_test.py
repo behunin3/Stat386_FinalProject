@@ -1,19 +1,15 @@
 import streamlit as st
 import pandas as pd
-import os
-import json
 import matplotlib.pyplot as plt
 
-df = pd.read_csv("../data/Combined_DF.csv")
+from stat386_finalproject_divorce_crime.wrangling import load_data, load_offense_mapping
 
 st.title("Discovering the Relationship Between Divorce and Crime")
-# st.write("This is my first streamlit app")
 
-with open('../json/crime_abbr.json', 'r') as file:
-    crime_json = json.load(file)
+df = load_data("../data/Combined_DF.csv")
 
 # Reverse mapping: full name -> code
-offense_map = crime_json["offenses"]
+offense_map = load_offense_mapping("../json/crime_abbr.json")
 name_to_code = {v: k for k, v in offense_map.items()}
 
 # sidebar controls
@@ -47,5 +43,3 @@ ax.set_xlabel("Year")
 ax.set_ylabel(f"{metric} of {crime_name}")
 ax.set_title(f"{crime_name} ({metric}) in {state} Over Time")
 st.pyplot(fig)
-
-# st.dataframe(df)
