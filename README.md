@@ -1,16 +1,13 @@
 # Stat386-FinalProject-Divorce-Crime
 
-A tiny demo package for learning Python packaging.
-
 ## Description
 
-This package demonstrates:
-- Basic functions (`add_one`)
-- Functions with dependencies (`calculate_mean` using numpy)
-- Proper project structure with tests
-- Modern packaging with `uv`
+This package allows users to find the relationship between Marriage and Divorce, and Crime in the United States.
 
 ## Installation
+`pip install stat386_finalproject_divorce_crime`
 
-```bash
-pip install stat386-finalproject-divorce-crime
+## Run App
+`streamlit run src/stat386_finalproject_divorce_crime/app.py`
+
+## Common Commands

@@ -1,11 +1,14 @@
 [build-system]
-requires = ["uv_build >= 0.9.5, <0.10.0"]
-build-backend = "uv_build"
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "Stat386-FinalProject-Divorce-Crime"
-version = "0.1.2"
-description = "Divorce and Crime Data Analysis"
+version = "0.1.4"
+description = "Divorce and FBI Crime Data Analysis with Streamlit"
+authors = [
+  { name = "Brendan Behunin" }
+]
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
@@ -15,7 +18,20 @@ classifiers = [
 ]
 dependencies = [
     "numpy>=1.26.0",
+    "pandas",
+    "matplotlib",
+    "streamlit",
+    "python-dotenv"
 ]
+
+[project.scripts]
+crime-app = "stat386_finalproject_divorce_crime.app:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [project.urls]
 Homepage = "https://github.com/behunin3/Stat386-FinalProject"
