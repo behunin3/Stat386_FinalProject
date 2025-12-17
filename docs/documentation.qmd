@@ -1,0 +1,55 @@
+---
+title: "Divorce and FBI Crime Data Analysis"
+author: "Brendan Behunin"
+format: html
+editor: visual
+---
+
+# Overview
+
+This project provides a Python package for exploring **FBI crime data and divorce statistics** by state.  
+It includes a **Streamlit app** for interactive visualization and tools for data wrangling.
+
+Key features:
+
+- Load and clean FBI crime and divorce data
+- Visualize crime trends over time
+- Compare crime vs divorce rates
+- Interactive dashboard via Streamlit
+
+---
+
+# Installation
+
+You can install the package from PyPI:
+
+```bash
+pip install stat386-finalproject-divorce-crime
+```
+
+---
+
+# Run 
+
+You can run the streamlit app by running this in the terminal:
+```bash
+streamlit run src/stat386_finalproject_divorce_crime/app.py
+```
+
+---
+
+# Interacting with Data
+
+On the left sidebar of the streamlit app, there are a couple drop downs. Select a state from the state dropdown to compare different states.
+
+Select the crime you wish to see.
+
+Select whether to look at actual data (i.e. number of homicides) vs rates of crime per capita
+
+After making your selection, streamlit will automatically make the necessary adjustments to the graph.
+
+--- 
+
+# Functions
+
+* load_data(file_name:str | Path) -> pd.DataFrame : this function takes in a string or path object as a parameter, and returns the corresponding datafile at that file location. You may need to play with the relative pathing. Data files will be located in Stat386-FinalProject-Divorce-Crime/src/data/*
