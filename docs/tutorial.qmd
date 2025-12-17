@@ -1,0 +1,126 @@
+---
+title: "Walkthrough Tutorial: Divorce and Crime Analysis Package"
+author: "Brendan Behunin"
+format: html
+editor: visual
+---
+
+# Introduction
+
+This tutorial walks through how to install, use, and explore the
+**Stat386 Divorce–Crime Analysis Package**.
+
+By the end of this tutorial, you will be able to:
+
+- Install the package from PyPI
+- Load and clean the crime and divorce datasets
+- Understand the structure of the data
+- Run and interact with the Streamlit application
+- Explore trends in crime and divorce over time
+
+---
+
+# Package Overview
+
+The package provides tools for:
+
+- Loading and wrangling FBI crime and divorce data
+- Aggregating monthly crime data to yearly summaries
+- Visualizing trends by state and crime type
+- Exploring relationships between crime and divorce rates
+
+The primary user interface is an interactive **Streamlit app**.
+
+---
+
+# Installation
+
+### Prerequisites
+
+- Python 3.9 or newer
+- `pip` installed
+
+### Install from PyPI
+
+```bash
+pip install stat386-finalproject-divorce-crime
+```
+
+---
+
+# Project Structure
+After installation, the project contains: 
+
+```text
+Stat386-FinalProject-Divorce-Crime
+├─ docs
+|  ├─ documentation.qmd
+|  └─ tutorial.qmd
+├─ src
+│  ├─ stat386_finalproject_divorce_crime
+│  │  ├─ __init__.py
+│  │  ├─ app.py                         # streamlit app
+│  │  ├─ wrangling.py                   # loading and managing data
+│  │  └─ clean_data.py                  # merges and cleans data
+│  ├─ data
+│  │  ├─ Combined_df.csv                # merged data
+|  |  ├─ Marriage_Divorce_rates.csv     # marriage and divorce data
+|  |  └─ summarized_fbi_data.parquet    # FBI Crime data
+│  └─ json
+│     └─ crime_abbr.json
+├─ pyproject.toml
+└─ README.md
+
+```
+
+---
+
+# Loading the Data
+
+The package provides helper functions to load and prepare data.
+
+```python
+from stat386_finalproject_divorce_crime.wrangling import load_data
+
+df = load_data("Combined_df.csv")
+df.head()
+```
+
+# Running the Streamlit App
+
+The easiest way to explore the data is through the Streamlit app. You can access it by running the following in a terminal.
+
+```bash
+streamlit run src/stat386_finalproject_divorce_crime/app.py
+```
+
+This launches an interactive dashboard in your browser.
+
+---
+
+# Using the Streamlit Interface
+
+### Sidebar Controls
+Users can select:
+
+- A state
+- A crime category
+- Metric type (Actual vs Rate)
+
+### Visualizations
+The app displays:
+
+- Crime trends over time
+- Crime vs divorce comparisons for a single state
+- Dynamic updates based on user selections
+
+---
+
+# Interpreting the Results
+
+When exploring the plots, consider:
+
+- Long-term crime trends by state
+- Differences between crime counts and crime rates
+- How divorce trends change alongside crime over time
+- Variability across states
