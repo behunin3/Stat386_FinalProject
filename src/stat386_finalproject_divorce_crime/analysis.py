@@ -4,6 +4,10 @@ import os
 import pandas as pd
 import seaborn as sns
 import statsmodels.formula.api as smf
+from sklearn.linear_model import LassoCV
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
 
 def _plot_hist(df, col, title, x_label):
     fig, ax = plt.subplots()
@@ -89,3 +93,75 @@ def histogram_maker(
         title=title,
         x_label=x_label
     )
+
+def lasso_family_structure_with_state_year(
+    df: pd.DataFrame,
+    target: str
+):
+    """
+    LASSO regression predicting marriage or divorce rates
+    using violent crime rate variables + year + state.
+    """
+
+
+    CRIME_RATE_VARS = [
+        "V_rate",
+        "HOM_rate",
+        "ASS_rate",
+        "ROB_rate",
+        "RPE_rate",
+        "ARS_rate",
+        "P_rate"
+    ]
+
+
+    FEATURES_NUMERIC = CRIME_RATE_VARS + ["year"]
+    FEATURES_CATEGORICAL = ["state"]
+
+
+    cols_needed = FEATURES_NUMERIC + FEATURES_CATEGORICAL + [target]
+    data = df[cols_needed].dropna()
+
+
+    X = data[FEATURES_NUMERIC + FEATURES_CATEGORICAL]
+    y = data[target]
+
+
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ("num", StandardScaler(), FEATURES_NUMERIC),
+            ("state", OneHotEncoder(drop="first", sparse_output=False),
+             FEATURES_CATEGORICAL)
+        ]
+    )
+
+
+    model = Pipeline([
+        ("prep", preprocessor),
+        ("lasso", LassoCV(
+            cv=5,
+            random_state=42,
+            max_iter=10000
+        ))
+    ])
+
+
+    model.fit(X, y)
+
+
+    # Extract coefficients with names
+    feature_names = (
+        FEATURES_NUMERIC +
+        list(model.named_steps["prep"]
+             .named_transformers_["state"]
+             .get_feature_names_out(["state"]))
+    )
+
+
+    coefs = pd.Series(
+        model.named_steps["lasso"].coef_,
+        index=feature_names
+    )
+
+
+    return model, coefs[coefs != 0].sort_values(key=abs, ascending=False)

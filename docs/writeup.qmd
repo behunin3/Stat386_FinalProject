@@ -1,0 +1,39 @@
+---
+title: "Exploratory Data Analysis and Regression on U.S. Violent Crime, Marriage, and Divorce"
+author: "Anton Hinckley and Brenden Huber"
+format: html
+---
+
+# Introduction
+
+We analyzed the relationship between violent crime and family structure indicators (marriage and divorce rates) across U.S. states from 2011–2024. Our data contains both **rates per capita** and **actual counts** for a variety of crime categories, as well as state-level marriage and divorce metrics.
+
+The goals of this analysis were:
+
+1. Explore **distributions and trends** in crime and family rates.
+2. Identify **cross-sectional associations** between marriage/divorce rates and violent crime.
+3. Fit **linear regressions** to quantify associations.
+
+---
+
+# 1. Exploring Distributions and Trends in Crime and Family Rates.
+
+Almost all of the violent crime rates were slightly right-skewed, where as divorce rates and marriage rates were more symmetrical. We considered log-tranformation for some of the violent crime rates such as homicide and rape rate, but decided against it.
+
+![Histogram](./images/histogram.png)
+
+We've graphed each violent crime rate variable compared to marriage and divorce over time. Overall violent crime rate has stayed very stagnent, while both divorce and marriage rates per 1,000 people steadily dropped. While comparing the two we came across a couple of notable patterns where divorce/marriage and a crime rate behaved unexpectedly.
+
+Insert unexpected graphs such as marriage and crime rate and divorce and crime rate.
+
+We saw an unexpectedly high correlation between marriage and rape, property crimes, and larsony (with rape having the highest correlation of 0.35). Additionally we saw that divorce rates have a much stronger correlation to violent crimes, especially with burglary rates, property crimes, and larsony
+
+![Histogram](./images/Correlation-Matrix-Rates.png)
+
+![Histogram](./images/Correlation-Matrix-Clearance.png)
+
+# Conclusion and Next Steps
+
+**Next Steps:**
+
+In the future our analysis would be greatly enhanced by having information for smaller regions, such as county or city level. State level is simply to large to draw any reasonable inference from. We were able to find a dataset which had marriage and divorce rates within the county level by year but we were unable to find anything close to the same for violent crime statistics. Another thing we can do to further our analysis is to have data for smaller time intervals. We would like to see if divorce rates and crime rates vary from month to month in a statistically significant way.
