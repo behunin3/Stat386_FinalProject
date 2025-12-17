@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "tutorial.html",
+    "href": "tutorial.html",
+    "title": "Walkthrough Tutorial: Divorce and Crime Analysis Package",
+    "section": "",
+    "text": "Introduction\nThis tutorial walks through how to install, use, and explore the Stat386 Divorce–Crime Analysis Package.\nBy the end of this tutorial, you will be able to:\n\nInstall the package from PyPI\nLoad and clean the crime and divorce datasets\nUnderstand the structure of the data\nRun and interact with the Streamlit application\nExplore trends in crime and divorce over time\n\n\n\n\nPackage Overview\nThe package provides tools for:\n\nLoading and wrangling FBI crime and divorce data\nAggregating monthly crime data to yearly summaries\nVisualizing trends by state and crime type\nExploring relationships between crime and divorce rates\n\nThe primary user interface is an interactive Streamlit app.\n\n\n\nInstallation\n\nPrerequisites\n\nPython 3.9 or newer\npip installed\n\n\n\nInstall from PyPI\npip install stat386-finalproject-divorce-crime\n\n\n\n\nProject Structure\nAfter installation, the project contains:\nStat386-FinalProject-Divorce-Crime\n├─ docs\n|  ├─ documentation.qmd\n|  └─ tutorial.qmd\n├─ src\n│  ├─ stat386_finalproject_divorce_crime\n│  │  ├─ __init__.py\n│  │  ├─ app.py                         # streamlit app\n│  │  ├─ wrangling.py                   # loading and managing data\n│  │  └─ clean_data.py                  # merges and cleans data\n│  ├─ data\n│  │  ├─ Combined_df.csv                # merged data\n|  |  ├─ Marriage_Divorce_rates.csv     # marriage and divorce data\n|  |  └─ summarized_fbi_data.parquet    # FBI Crime data\n│  └─ json\n│     └─ crime_abbr.json\n├─ pyproject.toml\n└─ README.md\n\n\n\n\nLoading the Data\nThe package provides helper functions to load and prepare data.\nfrom stat386_finalproject_divorce_crime.wrangling import load_data\n\ndf = load_data(\"Combined_df.csv\")\ndf.head()\n\n\nRunning the Streamlit App\nThe easiest way to explore the data is through the Streamlit app. You can access it by running the following in a terminal.\nstreamlit run src/stat386_finalproject_divorce_crime/app.py\nThis launches an interactive dashboard in your browser.\n\n\n\nUsing the Streamlit Interface\n\nSidebar Controls\nUsers can select:\n\nA state\nA crime category\nMetric type (Actual vs Rate)\n\n\n\nVisualizations\nThe app displays:\n\nCrime trends over time\nCrime vs divorce comparisons for a single state\nDynamic updates based on user selections\n\n\n\n\n\nInterpreting the Results\nWhen exploring the plots, consider:\n\nLong-term crime trends by state\nDifferences between crime counts and crime rates\nHow divorce trends change alongside crime over time\nVariability across states"
+  },
+  {
+    "objectID": "documentation.html",
+    "href": "documentation.html",
+    "title": "Divorce and FBI Crime Data Analysis",
+    "section": "",
+    "text": "Overview\nThis project provides a Python package for exploring FBI crime data and divorce statistics by state.\nIt includes a Streamlit app for interactive visualization and tools for data wrangling.\nKey features:\n\nLoad and clean FBI crime and divorce data\nVisualize crime trends over time\nCompare crime vs divorce rates\nInteractive dashboard via Streamlit\n\n\n\n\nInstallation\nYou can install the package from PyPI:\npip install stat386-finalproject-divorce-crime\n\n\n\nRun\nYou can run the streamlit app by running this in the terminal:\nstreamlit run src/stat386_finalproject_divorce_crime/app.py\n\n\n\nInteracting with Data\nOn the left sidebar of the streamlit app, there are a couple drop downs. Select a state from the state dropdown to compare different states.\nSelect the crime you wish to see.\nSelect whether to look at actual data (i.e. number of homicides) vs rates of crime per capita\nAfter making your selection, streamlit will automatically make the necessary adjustments to the graph.\n\n\n\nFunctions\n\nload_data(file_name:str | Path) -&gt; pd.DataFrame : this function takes in a string or path object as a parameter, and returns the corresponding datafile at that file location. You may need to play with the relative pathing. Data files will be located in Stat386-FinalProject-Divorce-Crime/src/data/*"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Stat 386 Final Project",
+    "section": "",
+    "text": "This project explores the relationship between divorce rates and FBI crime statistics using an interactive Streamlit dashboard."
+  },
+  {
+    "objectID": "index.html#overview",
+    "href": "index.html#overview",
+    "title": "Stat 386 Final Project",
+    "section": "",
+    "text": "This project explores the relationship between divorce rates and FBI crime statistics using an interactive Streamlit dashboard."
+  },
+  {
+    "objectID": "index.html#quick-start",
+    "href": "index.html#quick-start",
+    "title": "Stat 386 Final Project",
+    "section": "Quick Start",
+    "text": "Quick Start\npip install stat386-finalproject-divorce-crime\nstreamlit run src/stat386_finalproject_divorce_crime/app.py"
+  }
+]

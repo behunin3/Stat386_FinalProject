@@ -8,6 +8,50 @@ from datetime import datetime
 import requests
 import time
 
+def save_to_csv(df: pd.DataFrame, location: str, file_name: str) -> None:
+    """
+    Saves a pandas dataframe to a csv file
+
+    Parameters
+    ----------
+    df: pd.DataFrame
+    location: str
+    file_name: str
+
+    Return
+    ----------
+    None
+    """
+    if not file_name.endswith(".csv"):
+        raise ValueError("File_name must end in .csv")
+    if location.endswith("/"):
+        key = f"{location}{file_name}"
+    else:
+        key = f"{location}/{file_name}"
+    df.to_csv(key)
+
+def save_to_parquet(df: pd.DataFrame, location: str, file_name: str) -> None:
+    """
+    Saves a pandas dataframe to a parquet file
+
+    Parameters
+    ----------
+    df: pd.DataFrame
+    location: str
+    file_name: str
+
+    Return
+    ----------
+    None
+    """
+    if not file_name.endswith(".parquet"):
+        raise ValueError("File_name must end in .parquet")
+    if location.endswith("/"):
+        key = f"{location}{file_name}"
+    else:
+        key = f"{location}/{file_name}"
+    df.to_parquet(key)
+
 def load_data(file_path: str | Path) -> pd.DataFrame:
     """
     Load data from a file
@@ -152,7 +196,7 @@ def flatten_crime_json_with_clearances(data, crime, states=None):
 
 def get_fbi_data(key_name: str, start: str, end: str) -> pd.DataFrame:
     """
-    Calls the FBI Crime Data Explorer API and collects data into a parquet file, starting at start and ending at month
+    Calls the FBI Crime Data Explorer API and collects data into a parquet file, starting at start and ending at end
     This function requires that you have an API Key registered with the FBI and stored in a .env file
     
     Parameters
@@ -201,3 +245,60 @@ def get_fbi_data(key_name: str, start: str, end: str) -> pd.DataFrame:
 
     return df
     
+def get_census_data(key_name: str, start: int, end: int) -> pd.DataFrame:
+    """
+    Calls the US Census Data API and collects data into a csv file, starting at start and ending at end
+    This function requires that you have an API Key registered with the US Census Bureau and stored in a .env file
+    
+    Parameters
+    ----------
+    key_name : str
+    start : int
+    end : sinttr
+    
+    Returns
+    ----------
+    pd.DataFrame
+    """
+    load_dotenv() # Looks for a .env file in the current directory
+    api_key = os.getenv(key_name)
+    if api_key is None:
+        raise EnvironmentError(f"Environment file not found: {api_key}")
+
+    years = range(start, end)
+    all_data = []
+    for year in years:
+        url = f"https://api.census.gov/data/{year}/acs/acs1"
+        params = {
+            "get": "NAME,B12501_001E,B12501_005E,B12501_010E,B12503_005E,B12503_010E",
+            "for": "state:*",
+            "key": api_key
+        }
+
+        response = requests.get(url, params=params)
+
+        try:
+            data = response.json()
+        except ValueError:
+            print(f"{year}: JSON failed -- skipped")
+            continue
+
+        df = pd.DataFrame(data[1:], columns=data[0])
+        df['year'] = year
+
+        all_data.append(df)
+
+    final_df = pd.DataFrame()
+    final_df = pd.concat(all_data, ignore_index=True)
+    final_df = final_df.rename(columns={
+        "state": "state_num",
+        "NAME": "state",
+        "B12501_001E": "population_over_15",
+        "B12501_005E": "married_males_last_year",
+        "B12501_010E": "married_females_last_year",
+        "B12503_005E": "divorced_males_last_year",
+        "B12503_010E": "divorced_females_last_year"
+    })
+
+    return final_df
+

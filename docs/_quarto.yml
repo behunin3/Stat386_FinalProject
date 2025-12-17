@@ -1,0 +1,19 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Divorce & Crime Analysis"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: tutorial.qmd
+        text: Tutorial
+      - href: documentation.qmd
+        text: Documentation
+
+format:
+  html:
+    theme: cosmo
+    toc: true
