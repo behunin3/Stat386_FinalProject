@@ -21,7 +21,9 @@ dependencies = [
     "pandas",
     "matplotlib",
     "streamlit",
-    "python-dotenv"
+    "python-dotenv",
+    "seaborn",
+    "statsmodels"
 ]
 
 [project.scripts]
