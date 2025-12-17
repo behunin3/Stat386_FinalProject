@@ -1,0 +1,14 @@
+---
+title: "Stat 386 Final Project"
+---
+
+## Overview
+
+This project explores the relationship between divorce rates and FBI crime statistics using an interactive Streamlit dashboard.
+
+## Quick Start
+
+```bash
+pip install stat386-finalproject-divorce-crime
+streamlit run src/stat386_finalproject_divorce_crime/app.py
+```
