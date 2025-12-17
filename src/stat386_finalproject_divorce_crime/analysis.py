@@ -53,17 +53,15 @@ def linear_regression_by_crime_rate(df : pd.DataFrame, crime):
                     )
     return model
 
-def linear_regression_by_marriage_divorce(df : pd.DataFrame, marriage_true : bool, clearence_rate : bool):
+def linear_regression_by_marriage_divorce(df : pd.DataFrame, marriage_true : bool):
     df = df.sort_values(["state","year"]).copy()
     if (marriage_true):
         model_base = "marriage_rate_per_1000"
+        Rate_vars = ['LAR_rate', 'RPE_rate']    
+
     else:
         model_base = "divorce_rate_per_1000"
-    
-    if (clearence_rate):
-        Rate_vars = [col for col in df.columns if "_rate" in col and col for col in df.columns if "_clearance_rate" in col]    
-    else: 
-        Rate_vars = [col for col in df.columns if "_rate" in col and col for col in df.columns if "_clearance_rate" not in col]    
+        Rate_vars = ['BUR_rate', 'ARS_rate']    
 
     model_assumptions = "~ C(state) + C(year)"
     for Rate in Rate_vars:
