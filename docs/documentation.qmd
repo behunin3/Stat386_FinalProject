@@ -7,36 +7,37 @@ editor: visual
 
 # Overview
 
-This project provides a Python package for exploring **FBI crime data and divorce statistics** by state.  
+This project provides a Python package for exploring **FBI crime data and divorce statistics** by state.\
 It includes a **Streamlit app** for interactive visualization and tools for data wrangling.
 
 Key features:
 
-- Load and clean FBI crime and divorce data
-- Visualize crime trends over time
-- Compare crime vs divorce rates
-- Interactive dashboard via Streamlit
+-   Load and clean FBI crime and divorce data
+-   Visualize crime trends over time
+-   Compare crime vs divorce rates
+-   Interactive dashboard via Streamlit
 
----
+------------------------------------------------------------------------
 
 # Installation
 
 You can install the package from PyPI:
 
-```bash
+``` bash
 pip install stat386-finalproject-divorce-crime
 ```
 
----
+------------------------------------------------------------------------
 
-# Run 
+# Run
 
 You can run the streamlit app by running this in the terminal:
-```bash
+
+``` bash
 streamlit run src/stat386_finalproject_divorce_crime/app.py
 ```
 
----
+------------------------------------------------------------------------
 
 # Interacting with Data
 
@@ -48,8 +49,8 @@ Select whether to look at actual data (i.e. number of homicides) vs rates of cri
 
 After making your selection, streamlit will automatically make the necessary adjustments to the graph.
 
---- 
+------------------------------------------------------------------------
 
 # Functions
 
-* load_data(file_name:str | Path) -> pd.DataFrame : this function takes in a string or path object as a parameter, and returns the corresponding datafile at that file location. You may need to play with the relative pathing. Data files will be located in Stat386-FinalProject-Divorce-Crime/src/data/*
+-   load_data(file_name:str \| Path) -\> pd.DataFrame : this function takes in a string or path object as a parameter, and returns the corresponding datafile at that file location. You may need to play with the relative pathing. Data files will be located in Stat386-FinalProject-Divorce-Crime/src/data/\*

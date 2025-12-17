@@ -157,6 +157,6 @@ def main(census_file: str | Path, crime_file: str | Path) -> pd.DataFrame:
     df = merge_data(census_cleaned, crime_cleaned)
     return df
 
-if __name__ == "__main__":
-    df = main("Stat386-FinalProject-Divorce-Crime/src/data/mardiv.csv", "Stat386-FinalProject-Divorce-Crime/src/data/summarized_fbi_data.parquet")
-    print(df.head())
+# if __name__ == "__main__":
+#     df = main("Stat386-FinalProject-Divorce-Crime/src/data/mardiv.csv", "Stat386-FinalProject-Divorce-Crime/src/data/summarized_fbi_data.parquet")
+#     print(df.head())
