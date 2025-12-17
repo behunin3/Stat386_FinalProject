@@ -4,10 +4,6 @@ import os
 import pandas as pd
 import seaborn as sns
 import statsmodels.formula.api as smf
-from sklearn.linear_model import LassoCV
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
 
 def _plot_hist(df, col, title, x_label):
     fig, ax = plt.subplots()
@@ -78,122 +74,18 @@ def linear_regression_by_marriage_divorce(df : pd.DataFrame, marriage_true : boo
     return model
 
 # Create Histogram
-def histogram_maker(df : pd.DataFrame, column, rate : bool, clearance : bool = False):
-    
-    add_string = ""
-    add_title = ""
-
-    if (clearance):
-        add_string += "_clearence"
-        add_title += " Clearence"
-
-    if (rate):
-        add_string += "_rate"
-        add_title += " Rate"
-        x_label = "Rate"
-    else:
-        addstring += "_actual"
-        x_label = "Count"
-        add_title = " Count"
-
-    match column:
-        case "V":
-            title = "All Violent Crimes"
-        case "ASS": 
-            title = "Aggravated Assault"
-        case "BUR": 
-            title = "Burglary"
-        case "LAR": 
-            title = "Larceny-theft"
-        case "MVT": 
-            title = "Motor Vehicle Theft"
-        case "HOM": 
-            title = "Homicide"
-        case "RPE": 
-            title = "Rape"
-        case "ROB": 
-            title = "Robbery"
-        case "ARS": 
-            title = "Arson"
-        case "P": 
-            title = "All Property Crimes"
-        case "Marriage" :
-            add_string = ""
-            if (rate):
-                column = "marriage_rate_per_1000"
-            else:
-                column = "married_last_year"
-            title = "Marriage"
-        case "Divorce" : 
-            add_string = ""
-            if (rate):
-                column = "divorce_rate_per_1000"
-            else:
-                column = "divorced_last_year"            
-            title = "Divorce"
-   
-    final_col = f"{column}{add_string}"
-
-    return _plot_hist(df, final_col, f"Distribution of {title}{add_title}", x_label)
-
-def lasso_family_structure_with_state_year(
+def histogram_maker(
     df: pd.DataFrame,
-    target: str
+    column: str,
+    title: str,
+    x_label: str,
 ):
     """
-    LASSO regression predicting marriage or divorce rates
-    using violent crime rate variables + year + state.
+    Create a histogram for a given dataframe column
     """
-
-    CRIME_RATE_VARS = [
-        "V_rate",
-        "HOM_rate",
-        "ASS_rate",
-        "ROB_rate",
-        "RPE_rate",
-        "ARS_rate",
-        "P_rate"
-    ]
-
-    FEATURES_NUMERIC = CRIME_RATE_VARS + ["year"]
-    FEATURES_CATEGORICAL = ["state"]
-
-    cols_needed = FEATURES_NUMERIC + FEATURES_CATEGORICAL + [target]
-    data = df[cols_needed].dropna()
-
-    X = data[FEATURES_NUMERIC + FEATURES_CATEGORICAL]
-    y = data[target]
-
-    preprocessor = ColumnTransformer(
-        transformers=[
-            ("num", StandardScaler(), FEATURES_NUMERIC),
-            ("state", OneHotEncoder(drop="first", sparse_output=False),
-             FEATURES_CATEGORICAL)
-        ]
+    return _plot_hist(
+        df=df,
+        col=column,
+        title=title,
+        x_label=x_label
     )
-
-    model = Pipeline([
-        ("prep", preprocessor),
-        ("lasso", LassoCV(
-            cv=5,
-            random_state=42,
-            max_iter=10000
-        ))
-    ])
-
-    model.fit(X, y)
-
-    # Extract coefficients with names
-    feature_names = (
-        FEATURES_NUMERIC +
-        list(model.named_steps["prep"]
-             .named_transformers_["state"]
-             .get_feature_names_out(["state"]))
-    )
-
-    coefs = pd.Series(
-        model.named_steps["lasso"].coef_,
-        index=feature_names
-    )
-
-    return model, coefs[coefs != 0].sort_values(key=abs, ascending=False)
