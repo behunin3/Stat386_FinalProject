@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "Stat386-FinalProject-Divorce-Crime"
-version = "0.1.4"
+version = "0.1.5"
 description = "Divorce and FBI Crime Data Analysis with Streamlit"
 authors = [
   { name = "Brendan Behunin" }
@@ -34,6 +34,6 @@ package-dir = {"" = "src"}
 where = ["src"]
 
 [project.urls]
-Homepage = "https://github.com/behunin3/Stat386-FinalProject"
+Homepage = "https://behunin3.github.io/Stat386_FinalProject/"
+Documentation = "https://behunin3.github.io/Stat386_FinalProject/documentation.html"
 Repository = "https://github.com/behunin3/Stat386_FinalProject.git"
-Issues = "https://github.com/behunin3/Stat386-FinalProject/issues"

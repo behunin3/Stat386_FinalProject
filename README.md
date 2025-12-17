@@ -10,4 +10,6 @@ This package allows users to find the relationship between Marriage and Divorce,
 ## Run App
 `streamlit run src/stat386_finalproject_divorce_crime/app.py`
 
-## Common Commands
+## View Pages
+
+View the overview, documentation, and a tutorial at [Github Pages](https://behunin3.github.io/Stat386_FinalProject/)
