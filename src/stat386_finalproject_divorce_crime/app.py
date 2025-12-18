@@ -21,13 +21,14 @@ def select_df(df: pd.DataFrame):
         return df, False
     return national_aggregate(df), True
 
-def display_regression_results(model, crime_name: str):
-    st.subheader(f"Regression Results: {crime_name}")
+def display_regression_results(model, outcome_name: str):
+    st.subheader(f"Regression Results: {outcome_name}")
 
-    # Extract main coefficients
     coef_table = model.summary2().tables[1]
+
+    # Remove fixed effects
     coef_table = coef_table.loc[
-        ["marriage_rate_per_1000", "divorce_rate_per_1000"]
+        ~coef_table.index.str.startswith("C(")
     ]
 
     st.markdown("### Key Coefficients")
@@ -37,23 +38,20 @@ def display_regression_results(model, crime_name: str):
     col1, col2, col3 = st.columns(3)
     col1.metric("R²", f"{model.rsquared:.3f}")
     col2.metric("Observations", int(model.nobs))
-    col3.metric("Clusters (States)", model.cov_kwds["groups"].nunique())
-
-    # Interpretation
-    marriage_coef = coef_table.loc["marriage_rate_per_1000", "Coef."]
-    divorce_coef = coef_table.loc["divorce_rate_per_1000", "Coef."]
-
-    st.markdown("### Interpretation")
-    st.write(
-        f"""
-        - A one-unit increase in **marriage rate per 1,000** is associated with a
-          **{marriage_coef:.3f} change** in {crime_name}, holding state and year fixed.
-        - A one-unit increase in **divorce rate per 1,000** is associated with a
-          **{divorce_coef:.3f} change** in {crime_name}.
-        """
+    col3.metric(
+        "Clusters (States)",
+        model.cov_kwds["groups"].nunique()
     )
 
-    # Optional: full summary
+    # Interpretation (automatic)
+    st.markdown("### Interpretation")
+    for var, row in coef_table.iterrows():
+        st.write(
+            f"- A one-unit increase in **{var}** is associated with a "
+            f"**{row['Coef.']:.3f} change** in {outcome_name}, "
+            "holding state and year fixed."
+        )
+
     with st.expander("Full regression output"):
         st.text(model.summary())
 
