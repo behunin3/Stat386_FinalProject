@@ -12,7 +12,6 @@ The goals of this analysis were:
 
 1. Explore **distributions and trends** in crime and family rates.
 2. Fit **linear regressions** to quantify associations.
-3. Fit **LASSO regressions** to further quantify associations.
 ---
 
 # 1. Exploring Distributions and Trends in Crime and Family Rates.
@@ -27,7 +26,11 @@ We've graphed each violent crime rate variable compared to marriage and divorce 
 
 We saw an unexpectedly high correlation between marriage and rape, property crimes, and larsony (with rape having the highest correlation of 0.35). 
 
+![Marriage vs Rape Rates](./images/MarriagevsRape.png)
+
 Additionally we saw that divorce rates have a much stronger correlation to violent crimes, especially with burglary rates, property crimes, and larsony (highest correlation with burglary 0.62)
+
+![Burglary vs Divorce Rates](./images/BurglaryvsDivorce.png)
 
 # 2. Fit linear regressions to quantify associations.
 
