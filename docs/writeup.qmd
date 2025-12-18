@@ -31,6 +31,10 @@ We saw an unexpectedly high correlation between marriage and rape, property crim
 
 ![Histogram](./images/Correlation-Matrix-Clearance.png)
 
+# 2. Fit linear regressions to quantify associations.
+
+# 3. Fit **LASSO regressions** to further quantify associations.
+
 # Conclusion and Next Steps
 
 
@@ -40,4 +44,4 @@ We saw an unexpectedly high correlation between marriage and rape, property crim
 In the future our analysis would be greatly enhanced by having information for smaller regions, such as county or city level. State level is simply to large to draw any reasonable inference from. We were able to find a dataset which had marriage and divorce rates within the county level by year but we were unable to find anything close to the same for violent crime statistics. Another thing we can do to further our analysis is to have data for smaller time intervals. We would like to see if divorce rates and crime rates vary from month to month in a statistically significant way.
 
 ### References
-Census 
+[FBI SPI ]

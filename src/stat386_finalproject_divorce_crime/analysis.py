@@ -71,26 +71,39 @@ def linear_regression_by_crime_rate(df: pd.DataFrame, crime: str):
 
     return model
 
-def linear_regression_by_marriage_divorce(df : pd.DataFrame, marriage_true : bool):
-    df = df.sort_values(["state","year"]).copy()
-    if (marriage_true):
-        model_base = "marriage_rate_per_1000"
-        Rate_vars = ['LAR_rate', 'RPE_rate']    
 
+def linear_regression_by_marriage_divorce(
+    df: pd.DataFrame,
+    marriage_true: bool
+):
+    if marriage_true:
+        outcome = "marriage_rate_per_1000"
+        rate_vars = ["LAR_rate", "RPE_rate"]
     else:
-        model_base = "divorce_rate_per_1000"
-        Rate_vars = ['BUR_rate', 'ARS_rate']    
+        outcome = "divorce_rate_per_1000"
+        rate_vars = ["BUR_rate", "ARS_rate"]
 
-    model_assumptions = "~ C(state) + C(year)"
-    for Rate in Rate_vars:
-        model_assumptions += f" + {Rate}"
+    vars_needed = [outcome] + rate_vars + ["state", "year"]
 
-    model = smf.ols(f"{model_base} {model_assumptions}",
-                    data = df).fit(
-                        cov_type="cluster",
-                        cov_kwds={"groups": df["state"]}
-                    )
-    
+    # DROP NAs FIRST
+    df_model = (
+        df[vars_needed]
+        .dropna()
+        .sort_values(["state", "year"])
+        .copy()
+    )
+
+    rhs = " + ".join(rate_vars + ["C(state)", "C(year)"])
+    formula = f"{outcome} ~ {rhs}"
+
+    model = smf.ols(
+        formula,
+        data=df_model
+    ).fit(
+        cov_type="cluster",
+        cov_kwds={"groups": df_model["state"]}
+    )
+
     return model
 
 # Create Histogram
