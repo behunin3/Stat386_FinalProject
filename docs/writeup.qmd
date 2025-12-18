@@ -74,8 +74,8 @@ In the future our analysis would be greatly enhanced by having information for s
 
 ### Links
 * [Streamlit Link]()
-* [Github Project page]()
-* [Documenatation on Github Page]()
+* [Github Project page](https://github.com/behunin3/Stat386_FinalProject)
+* [Documenatation on Github Page](https://behunin3.github.io/Stat386_FinalProject/documentation.html)
 * [FBI API documentation](https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/docApi)
 * [Census API documentation](https://api.census.gov/data.html)
 * [Census Bureau Data](https://api.census.gov/data.html?utm_source=chatgpt.com)
