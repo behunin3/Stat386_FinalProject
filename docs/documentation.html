@@ -137,6 +137,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link active" href="./documentation.html" aria-current="page"> 
 <span class="menu-text">Documentation</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./writeup.html"> 
+<span class="menu-text">Write Up</span></a>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -157,7 +161,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
   <li><a href="#run" id="toc-run" class="nav-link" data-scroll-target="#run">Run</a></li>
   <li><a href="#interacting-with-data" id="toc-interacting-with-data" class="nav-link" data-scroll-target="#interacting-with-data">Interacting with Data</a></li>
-  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a></li>
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a>
+  <ul class="collapse">
+  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">analysis</a></li>
+  <li><a href="#clean_data" id="toc-clean_data" class="nav-link" data-scroll-target="#clean_data">clean_data</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -205,7 +213,7 @@ It includes a <strong>Streamlit app</strong> for interactive visualization and t
 <section id="installation" class="level1">
 <h1>Installation</h1>
 <p>You can install the package from PyPI:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install stat386-finalproject-divorce-crime</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install Stat386-FinalProject-Divorce-Crime==0.1.5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="run" class="level1">
@@ -225,10 +233,266 @@ It includes a <strong>Streamlit app</strong> for interactive visualization and t
 <section id="functions" class="level1">
 <h1>Functions</h1>
 <ul>
-<li>load_data(file_name:str | Path) -&gt; pd.DataFrame : this function takes in a string or path object as a parameter, and returns the corresponding datafile at that file location. You may need to play with the relative pathing. Data files will be located in Stat386-FinalProject-Divorce-Crime/src/data/*</li>
+<li><p>load_data() Load data from a file</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>file_path : str or Path</td>
+</tr>
+</tbody>
+</table>
+<p>Returns ———- pd.DataFrame</p></li>
+<li><p>save_to_csv() Saves a pandas dataframe to a csv file</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>df: pd.DataFrame</td>
+</tr>
+<tr class="even">
+<td>location: str</td>
+</tr>
+<tr class="odd">
+<td>file_name: str</td>
+</tr>
+</tbody>
+</table>
+<p>Return ———- None</p></li>
+<li><p>save_to_parquet() Saves a pandas dataframe to a parquet file</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>df: pd.DataFrame</td>
+</tr>
+<tr class="even">
+<td>location: str</td>
+</tr>
+<tr class="odd">
+<td>file_name: str</td>
+</tr>
+</tbody>
+</table>
+<p>Return ———- None</p></li>
+<li><p>load_offense_mapping() Load crime offense mapping json</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>json_path : str or Path</td>
+</tr>
+</tbody>
+</table>
+<p>Returns ———- dict</p></li>
+<li><p>load_json() Load json</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>json_path : str or Path</td>
+</tr>
+</tbody>
+</table>
+<p>Returns ———- dict</p></li>
+<li><p>get_fbi_data() Calls the FBI Crime Data Explorer API and collects data into a parquet file, starting at start and ending at end This function requires that you have an API Key registered with the FBI and stored in a .env file</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>key_name : str</td>
+</tr>
+<tr class="even">
+<td>start : str</td>
+</tr>
+<tr class="odd">
+<td>end : str</td>
+</tr>
+</tbody>
+</table>
+<p>Returns ———- pd.DataFrame</p></li>
+<li><p>get_census_data() Calls the US Census Data API and collects data into a csv file, starting at start and ending at end This function requires that you have an API Key registered with the US Census Bureau and stored in a .env file</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>key_name : str</td>
+</tr>
+<tr class="even">
+<td>start : int</td>
+</tr>
+<tr class="odd">
+<td>end : sinttr</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">pd.DataFrame</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<section id="analysis" class="level3">
+<h3 class="anchored" data-anchor-id="analysis">analysis</h3>
+<ul>
+<li><p>national_aggregate() Creates national-level trends:</p>
+<ul>
+<li>Averages rate variables</li>
+<li>Sums actual count variables</li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>df : pd.DataFrame</td>
+</tr>
+</tbody>
+</table>
+<p>Returns ———- pd.DataFrame</p></li>
+<li><p>linear_regression_by_crime_rate() Creates a linear regression to predict crime using marriage rate, divorce rate, state, and year as predictors</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>df : pd.DataFrame</td>
+</tr>
+<tr class="even">
+<td>crime : str</td>
+</tr>
+</tbody>
+</table>
+<p>Returns ———- statsmodels.formula.api ols model</p></li>
+<li><p>linear_regression_by_marriage_divorce() Creates a linear regression to predict marriage or divorce using larceny rates and rape rates, and burglary and arson rates respectively</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>df : pd.DataFrame</td>
+</tr>
+<tr class="even">
+<td>marriage_true : bool</td>
+</tr>
+</tbody>
+</table>
+<p>Returns ———- statsmodels.formula.api ols model</p></li>
+<li><p>histogram_maker() Create a histogram for a given dataframe column</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>df : pd.DataFrame</td>
+</tr>
+<tr class="even">
+<td>column : str</td>
+</tr>
+<tr class="odd">
+<td>title : str</td>
+</tr>
+<tr class="even">
+<td>x_label : str</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">matplotlib figure</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+</section>
+<section id="clean_data" class="level3">
+<h3 class="anchored" data-anchor-id="clean_data">clean_data</h3>
+<ul>
+<li><p>main() Loads in data, cleans it, and merges it</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>census_data_file : str | Path</td>
+</tr>
+<tr class="even">
+<td>crime_data_file : str | Path</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Return</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">pd.DataFrame</td>
+</tr>
+</tbody>
+</table></li>
 </ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

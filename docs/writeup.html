@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Brendan Behunin">
+<meta name="author" content="Anton Hinckley and Brenden Huber">
 
-<title>Walkthrough Tutorial: Divorce and Crime Analysis Package – Divorce &amp; Crime Analysis</title>
+<title>Exploratory Data Analysis and Regression on U.S. Violent Crime, Marriage, and Divorce – Divorce &amp; Crime Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -105,6 +70,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -130,7 +124,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./tutorial.html" aria-current="page"> 
+    <a class="nav-link" href="./tutorial.html"> 
 <span class="menu-text">Tutorial</span></a>
   </li>  
   <li class="nav-item">
@@ -138,7 +132,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Documentation</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./writeup.html"> 
+    <a class="nav-link active" href="./writeup.html" aria-current="page"> 
 <span class="menu-text">Write Up</span></a>
   </li>  
 </ul>
@@ -158,18 +152,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#package-overview" id="toc-package-overview" class="nav-link" data-scroll-target="#package-overview">Package Overview</a></li>
-  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a>
+  <li><a href="#exploring-distributions-and-trends-in-crime-and-family-rates." id="toc-exploring-distributions-and-trends-in-crime-and-family-rates." class="nav-link" data-scroll-target="#exploring-distributions-and-trends-in-crime-and-family-rates.">1. Exploring Distributions and Trends in Crime and Family Rates.</a></li>
+  <li><a href="#fit-linear-regressions-to-quantify-associations.-1" id="toc-fit-linear-regressions-to-quantify-associations.-1" class="nav-link" data-scroll-target="#fit-linear-regressions-to-quantify-associations.-1">2. Fit linear regressions to quantify associations.</a>
   <ul class="collapse">
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  <li><a href="#install-from-pypi" id="toc-install-from-pypi" class="nav-link" data-scroll-target="#install-from-pypi">Install from PyPI</a></li>
+  <li><a href="#crime-as-the-outcome" id="toc-crime-as-the-outcome" class="nav-link" data-scroll-target="#crime-as-the-outcome">2.1 Crime as the Outcome</a></li>
+  <li><a href="#marriage-and-divorce-as-outcomes" id="toc-marriage-and-divorce-as-outcomes" class="nav-link" data-scroll-target="#marriage-and-divorce-as-outcomes">2.2 Marriage and Divorce as Outcomes</a></li>
   </ul></li>
-  <li><a href="#project-structure" id="toc-project-structure" class="nav-link" data-scroll-target="#project-structure">Project Structure</a></li>
-  <li><a href="#running-the-streamlit-app" id="toc-running-the-streamlit-app" class="nav-link" data-scroll-target="#running-the-streamlit-app">Running the Streamlit App</a></li>
-  <li><a href="#see-the-affect-of-rape-on-marriage-statistics-in-kansas" id="toc-see-the-affect-of-rape-on-marriage-statistics-in-kansas" class="nav-link" data-scroll-target="#see-the-affect-of-rape-on-marriage-statistics-in-kansas">See the affect of Rape on Marriage Statistics in Kansas</a></li>
-  <li><a href="#see-the-affect-of-motor-vehicle-theft-rates-on-divorce-rates-at-the-national-level" id="toc-see-the-affect-of-motor-vehicle-theft-rates-on-divorce-rates-at-the-national-level" class="nav-link" data-scroll-target="#see-the-affect-of-motor-vehicle-theft-rates-on-divorce-rates-at-the-national-level">See the affect of Motor Vehicle Theft Rates on Divorce Rates at the national level</a></li>
-  <li><a href="#see-the-summary-stats-of-linear-regression-models" id="toc-see-the-summary-stats-of-linear-regression-models" class="nav-link" data-scroll-target="#see-the-summary-stats-of-linear-regression-models">See the summary stats of linear regression models</a></li>
-  <li><a href="#explore-on-your-own" id="toc-explore-on-your-own" class="nav-link" data-scroll-target="#explore-on-your-own">Explore on your own</a></li>
+  <li><a href="#conclusion-and-next-steps" id="toc-conclusion-and-next-steps" class="nav-link" data-scroll-target="#conclusion-and-next-steps">Conclusion and Next Steps</a>
+  <ul class="collapse">
+  <li><a href="#links" id="toc-links" class="nav-link" data-scroll-target="#links">Links</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -178,7 +170,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Walkthrough Tutorial: Divorce and Crime Analysis Package</h1>
+<h1 class="title">Exploratory Data Analysis and Regression on U.S. Violent Crime, Marriage, and Divorce</h1>
 </div>
 
 
@@ -188,7 +180,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Brendan Behunin </p>
+             <p>Anton Hinckley and Brenden Huber </p>
           </div>
   </div>
     
@@ -203,113 +195,88 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>This tutorial walks through how to install, use, and explore the <strong>Stat386 Divorce–Crime Analysis Package</strong>.</p>
-<p>By the end of this tutorial, you will be able to:</p>
+<p>We analyzed the relationship between violent crime and family structure indicators (marriage and divorce rates) across U.S. states from 2011–2024. Our data contains both <strong>rates per capita</strong> and <strong>actual counts</strong> for a variety of crime categories, as well as state-level marriage and divorce metrics.</p>
+<p>The goals of this analysis were:</p>
+<ol type="1">
+<li>Explore <strong>distributions and trends</strong> in crime and family rates.</li>
+<li><h2 id="fit-linear-regressions-to-quantify-associations." class="anchored" data-anchor-id="introduction">Fit <strong>linear regressions</strong> to quantify associations.</h2></li>
+</ol>
+</section>
+<section id="exploring-distributions-and-trends-in-crime-and-family-rates." class="level1">
+<h1>1. Exploring Distributions and Trends in Crime and Family Rates.</h1>
+<p>Almost all of the violent crime rates were slightly right-skewed, where as divorce rates and marriage rates were more symmetrical. We considered log-tranformation for some of the violent crime rates such as homicide and rape rate, but decided against it.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/histogram.png" class="img-fluid figure-img"></p>
+<figcaption>Histogram</figcaption>
+</figure>
+</div>
+<p>We’ve graphed each violent crime rate variable compared to marriage and divorce over time. Overall violent crime rate has stayed very stagnent, while both divorce and marriage rates per 1,000 people steadily dropped. While comparing the two we came across a couple of notable patterns where divorce/marriage and a crime rate behaved unexpectedly.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/Correlation-Matrix-Rates.png" class="img-fluid figure-img"></p>
+<figcaption>Correlation Matrix</figcaption>
+</figure>
+</div>
+<p>We saw an unexpectedly high correlation between marriage and rape, property crimes, and larsony (with rape having the highest correlation of 0.35).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/MarriagevsRape.png" class="img-fluid figure-img"></p>
+<figcaption>Marriage vs Rape Rates</figcaption>
+</figure>
+</div>
+<p>Additionally we saw that divorce rates have a much stronger correlation to violent crimes, especially with burglary rates, property crimes, and larsony (highest correlation with burglary 0.62)</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/BurglaryvsDivorce.png" class="img-fluid figure-img"></p>
+<figcaption>Burglary vs Divorce Rates</figcaption>
+</figure>
+</div>
+</section>
+<section id="fit-linear-regressions-to-quantify-associations.-1" class="level1">
+<h1>2. Fit linear regressions to quantify associations.</h1>
+<p>To quantify the relationship between violent crime and family structure, we estimated a series of linear regression using state-year panel data. Two approaches were used.</p>
+<section id="crime-as-the-outcome" class="level2">
+<h2 class="anchored" data-anchor-id="crime-as-the-outcome">2.1 Crime as the Outcome</h2>
+<p>We first modeled each violent crime rate as a function of marriage and divorce rates, controlling for state and year fixed effects:</p>
+<p><span class="math display">\[
+\text{CrimeRate}_{st} = \beta_1\text{MarriageRate}_{st} + \beta_2\text{DivorceRate}_{st} + \text{FixedEffect:State}_s + \text{FixedEffect:Year}_t + \epsilon_{st}
+\]</span></p>
+<p>These regressions suggested that divorce rates are more strongly associated with violent crime rates than marriage rate. Additionally we very large coefficient of determinations from Burglary, Larsony, and Rape.</p>
+</section>
+<section id="marriage-and-divorce-as-outcomes" class="level2">
+<h2 class="anchored" data-anchor-id="marriage-and-divorce-as-outcomes">2.2 Marriage and Divorce as Outcomes</h2>
+<p>Second, we reversed the model, trating marriage and divorce rates as outcomes and using selected crime rate variables as predictors.</p>
+<p><span class="math display">\[
+\text{FamilyRate}_{st} = \sum(\beta_k\text{CrimeRate}_{kst}) + \text{FixedEffect:State}_s + \text{FixedEffect:Year}_t + \epsilon_{st}
+\]</span></p>
 <ul>
-<li>Install the package from PyPI</li>
-<li>Load and clean the crime and divorce datasets</li>
-<li>Understand the structure of the data</li>
-<li>Run and interact with the Streamlit application</li>
-<li>Explore trends in crime and divorce over time</li>
+<li><p>For marriage rates, predictors included larceny and rape rates, because these were the two strongest predictors that weren’t higly correlated.</p></li>
+<li><p>For divorce rates, predictors included burglary and arson rates, because these were the two strongest predictors that weren’t higly correlated.</p></li>
 </ul>
-<hr>
+<p>Results indicate that divorce rates are more sensitive to violent crime rates than marriages. The inclusion of state and year fixed effects reduced coefficient magnitudes, showing that much of the raw correlation arises from persstent cross-state differences rather than shor-term fluctuations.</p>
 </section>
-<section id="package-overview" class="level1">
-<h1>Package Overview</h1>
-<p>The package provides tools for:</p>
+</section>
+<section id="conclusion-and-next-steps" class="level1">
+<h1>Conclusion and Next Steps</h1>
+<p>In this project, we examined the relationship between violent crime and family structure across U.S. states using both exploratory analysis and regression techniques. A couple key conclusions emerged.</p>
+<p>First, national trends show declining marriage and divorce rates alongside relatively stable violent crime rates over data period. Second, linear regression results indicat that divorce rates are more strongly associated with violent crime rates than marriage rates, even after controlling for state and year fixed effects. However, much of the observed correlation is driven by persistent differences across states.</p>
+<p>It’s important to note that these findings should be intepreted as associational not causal. As state-level data is too coarse to isolate links between crime and marriage dynamics, and unobserved factors such as economic conditions or policy differences may drive both.</p>
+<p><strong>Next Steps:</strong></p>
+<p>In the future our analysis would be greatly enhanced by having information for smaller regions, such as county or city level. State level is simply to large to draw any reasonable inference from. We were able to find a dataset which had marriage and divorce rates within the county level by year but we were unable to find anything close to the same for violent crime statistics. Another thing we can do to further our analysis is to have data for smaller time intervals. We would like to see if divorce rates and crime rates vary from month to month in a statistically significant way.</p>
+<section id="links" class="level3">
+<h3 class="anchored" data-anchor-id="links">Links</h3>
 <ul>
-<li>Loading and wrangling FBI crime and divorce data</li>
-<li>Aggregating monthly crime data to yearly summaries</li>
-<li>Visualizing trends by state and crime type</li>
-<li>Exploring relationships between crime and divorce rates</li>
+<li><a href="">Streamlit Link</a></li>
+<li><a href="">Github Project page</a></li>
+<li><a href="">Documenatation on Github Page</a></li>
+<li><a href="https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/docApi">FBI API documentation</a></li>
+<li><a href="https://api.census.gov/data.html">Census API documentation</a></li>
+<li><a href="https://api.census.gov/data.html?utm_source=chatgpt.com">Census Bureau Data</a></li>
 </ul>
-<p>The primary user interface is an interactive <strong>Streamlit app</strong>.</p>
-<hr>
-</section>
-<section id="installation" class="level1">
-<h1>Installation</h1>
-<section id="prerequisites" class="level3">
-<h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
-<ul>
-<li>Python 3.9 or newer</li>
-<li><code>pip</code> installed</li>
-</ul>
-</section>
-<section id="install-from-pypi" class="level3">
-<h3 class="anchored" data-anchor-id="install-from-pypi">Install from PyPI</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install stat386-finalproject-divorce-crime</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<hr>
-</section>
-</section>
-<section id="project-structure" class="level1">
-<h1>Project Structure</h1>
-<p>After installation, the project contains:</p>
-<pre class="text"><code>Stat386-FinalProject-Divorce-Crime
-├─ docs
-|  ├─ documentation.qmd
-|  └─ tutorial.qmd
-├─ src
-│  ├─ stat386_finalproject_divorce_crime
-│  │  ├─ __init__.py
-│  │  ├─ app.py                         # streamlit app
-│  │  ├─ wrangling.py                   # loading and managing data
-│  │  └─ clean_data.py                  # merges and cleans data
-│  ├─ data
-│  │  ├─ Combined_df.csv                # merged data
-|  |  ├─ Marriage_Divorce_rates.csv     # marriage and divorce data
-|  |  └─ summarized_fbi_data.parquet    # FBI Crime data
-│  └─ json
-│     └─ crime_abbr.json
-├─ pyproject.toml
-└─ README.md</code></pre>
-<hr>
-</section>
-<section id="running-the-streamlit-app" class="level1">
-<h1>Running the Streamlit App</h1>
-<p>The easiest way to explore the data is through the Streamlit app. You can access it by running the following in a terminal.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">streamlit</span> run src/stat386_finalproject_divorce_crime/app.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This launches an interactive dashboard in your browser.</p>
-<hr>
-</section>
-<section id="see-the-affect-of-rape-on-marriage-statistics-in-kansas" class="level1">
-<h1>See the affect of Rape on Marriage Statistics in Kansas</h1>
-<p>Make sure the following are selected</p>
-<ul>
-<li>State</li>
-<li>Line</li>
-<li>Marriage</li>
-<li>Actual</li>
-<li>Rape</li>
-<li>Kansas</li>
-</ul>
-<p>Note the peaks and valleys of each. Do they align? Or do they seem to be inversely related?</p>
-</section>
-<section id="see-the-affect-of-motor-vehicle-theft-rates-on-divorce-rates-at-the-national-level" class="level1">
-<h1>See the affect of Motor Vehicle Theft Rates on Divorce Rates at the national level</h1>
-<p>Make sure the following are selected - National - Line - Divorce - Rate - Motor Vehicle Theft</p>
-<p>You should see that as motor vehicle theft has increased from year to year, divorce rate has decreased over the same time period.</p>
-</section>
-<section id="see-the-summary-stats-of-linear-regression-models" class="level1">
-<h1>See the summary stats of linear regression models</h1>
-<ul>
-<li>Check the box for “Show Regression Model”</li>
-<li>Select a crime</li>
-<li>Select a metric</li>
-<li>Select Divorce</li>
-<li>Select a model
-<ul>
-<li>Crime as a function of marriage and divorce</li>
-<li>Marriage as a function of crime</li>
-<li>Divorce as a function of crime</li>
-</ul></li>
-</ul>
-<p>Note the R^2 of the model you chose. Also note the coefficients for all variables. Which are positively correlated and which are negatively correlated?</p>
-</section>
-<section id="explore-on-your-own" class="level1">
-<h1>Explore on your own</h1>
-<p>Try playing with all the parameters in the left sidebar on your own. Try to find any correlation (positive or negative) between crime and marriage and divorce.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

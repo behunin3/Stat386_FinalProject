@@ -1,6 +1,6 @@
 project:
   type: website
-  output-dir: _site
+  output-dir: docs
 
 website:
   title: "Divorce & Crime Analysis"
@@ -12,6 +12,8 @@ website:
         text: Tutorial
       - href: documentation.qmd
         text: Documentation
+      - href: writeup.qmd
+        text: Write Up
 
 format:
   html:

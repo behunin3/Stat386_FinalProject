@@ -24,7 +24,7 @@ Key features:
 You can install the package from PyPI:
 
 ``` bash
-pip install stat386-finalproject-divorce-crime
+pip install Stat386-FinalProject-Divorce-Crime==0.1.5
 ```
 
 ------------------------------------------------------------------------
