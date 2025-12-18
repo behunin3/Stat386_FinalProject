@@ -53,4 +53,148 @@ After making your selection, streamlit will automatically make the necessary adj
 
 # Functions
 
--   load_data(file_name:str \| Path) -\> pd.DataFrame : this function takes in a string or path object as a parameter, and returns the corresponding datafile at that file location. You may need to play with the relative pathing. Data files will be located in Stat386-FinalProject-Divorce-Crime/src/data/\*
+- load_data()
+    Load data from a file
+
+    Parameters
+    ----------
+    file_path : str or Path
+
+    Returns 
+    ----------
+    pd.DataFrame
+- save_to_csv()
+    Saves a pandas dataframe to a csv file
+
+    Parameters
+    ----------
+    df: pd.DataFrame
+    location: str
+    file_name: str
+
+    Return
+    ----------
+    None
+- save_to_parquet()
+    Saves a pandas dataframe to a parquet file
+
+    Parameters
+    ----------
+    df: pd.DataFrame
+    location: str
+    file_name: str
+
+    Return
+    ----------
+    None
+- load_offense_mapping()
+    Load crime offense mapping json
+
+    Parameters
+    ----------
+    json_path : str or Path
+
+    Returns 
+    ----------
+    dict
+- load_json()
+    Load json
+
+    Parameters
+    ----------
+    json_path : str or Path
+
+    Returns 
+    ----------
+    dict
+- get_fbi_data()
+    Calls the FBI Crime Data Explorer API and collects data into a parquet file, starting at start and ending at end
+    This function requires that you have an API Key registered with the FBI and stored in a .env file
+    
+    Parameters
+    ----------
+    key_name : str
+    start : str
+    end : str
+    
+    Returns
+    ----------
+    pd.DataFrame
+- get_census_data()
+    Calls the US Census Data API and collects data into a csv file, starting at start and ending at end
+    This function requires that you have an API Key registered with the US Census Bureau and stored in a .env file
+    
+    Parameters
+    ----------
+    key_name : str
+    start : int
+    end : sinttr
+    
+    Returns
+    ----------
+    pd.DataFrame
+
+### analysis
+
+- national_aggregate()
+    Creates national-level trends:
+    - Averages rate variables
+    - Sums actual count variables
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+
+    Returns 
+    ----------
+    pd.DataFrame
+- linear_regression_by_crime_rate()
+    Creates a linear regression to predict crime using marriage rate, divorce rate, state, and year as predictors
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+    crime : str
+
+    Returns
+    ----------
+    statsmodels.formula.api ols model
+- linear_regression_by_marriage_divorce()
+    Creates a linear regression to predict marriage or divorce using larceny rates and rape rates, and burglary and arson rates respectively
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+    marriage_true : bool
+
+    Returns
+    ----------
+    statsmodels.formula.api ols model
+- histogram_maker()
+    Create a histogram for a given dataframe column
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+    column : str
+    title : str
+    x_label : str
+
+    Returns
+    ----------
+    matplotlib figure
+
+### clean_data
+
+- main()
+    Loads in data, cleans it, and merges it
+
+    Parameters
+    ----------
+    census_data_file : str | Path
+    crime_data_file : str | Path
+
+    Return
+    ----------
+    pd.DataFrame
+

@@ -103,14 +103,12 @@ def main():
         elif model_radio == "Marriage ~ Crime":
             model = linear_regression_by_marriage_divorce(
                 df=df_state,   # always use full state panel
-                marriage_true=True,
-                clearence_rate=False
+                marriage_true=True
             )
         elif model_radio == "Divorce ~ Crime":
             model = linear_regression_by_marriage_divorce(
                 df=df_state,   # always use full state panel
-                marriage_true=False,
-                clearence_rate=False
+                marriage_true=False
             )
         display_regression_results(model, crime_name)
     else:

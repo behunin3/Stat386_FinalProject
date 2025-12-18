@@ -161,14 +161,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#install-from-pypi" id="toc-install-from-pypi" class="nav-link" data-scroll-target="#install-from-pypi">Install from PyPI</a></li>
   </ul></li>
   <li><a href="#project-structure" id="toc-project-structure" class="nav-link" data-scroll-target="#project-structure">Project Structure</a></li>
-  <li><a href="#loading-the-data" id="toc-loading-the-data" class="nav-link" data-scroll-target="#loading-the-data">Loading the Data</a></li>
   <li><a href="#running-the-streamlit-app" id="toc-running-the-streamlit-app" class="nav-link" data-scroll-target="#running-the-streamlit-app">Running the Streamlit App</a></li>
-  <li><a href="#using-the-streamlit-interface" id="toc-using-the-streamlit-interface" class="nav-link" data-scroll-target="#using-the-streamlit-interface">Using the Streamlit Interface</a>
-  <ul class="collapse">
-  <li><a href="#sidebar-controls" id="toc-sidebar-controls" class="nav-link" data-scroll-target="#sidebar-controls">Sidebar Controls</a></li>
-  <li><a href="#visualizations" id="toc-visualizations" class="nav-link" data-scroll-target="#visualizations">Visualizations</a></li>
-  </ul></li>
-  <li><a href="#interpreting-the-results" id="toc-interpreting-the-results" class="nav-link" data-scroll-target="#interpreting-the-results">Interpreting the Results</a></li>
+  <li><a href="#see-the-affect-of-rape-on-marriage-statistics-in-kansas" id="toc-see-the-affect-of-rape-on-marriage-statistics-in-kansas" class="nav-link" data-scroll-target="#see-the-affect-of-rape-on-marriage-statistics-in-kansas">See the affect of Rape on Marriage Statistics in Kansas</a></li>
+  <li><a href="#see-the-affect-of-motor-vehicle-theft-rates-on-divorce-rates-at-the-national-level" id="toc-see-the-affect-of-motor-vehicle-theft-rates-on-divorce-rates-at-the-national-level" class="nav-link" data-scroll-target="#see-the-affect-of-motor-vehicle-theft-rates-on-divorce-rates-at-the-national-level">See the affect of Motor Vehicle Theft Rates on Divorce Rates at the national level</a></li>
+  <li><a href="#see-the-summary-stats-of-linear-regression-models" id="toc-see-the-summary-stats-of-linear-regression-models" class="nav-link" data-scroll-target="#see-the-summary-stats-of-linear-regression-models">See the summary stats of linear regression models</a></li>
+  <li><a href="#explore-on-your-own" id="toc-explore-on-your-own" class="nav-link" data-scroll-target="#explore-on-your-own">Explore on your own</a></li>
   </ul>
 </nav>
     </div>
@@ -260,56 +257,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 │  └─ json
 │     └─ crime_abbr.json
 ├─ pyproject.toml
-└─ README.md
-</code></pre>
+└─ README.md</code></pre>
 <hr>
-</section>
-<section id="loading-the-data" class="level1">
-<h1>Loading the Data</h1>
-<p>The package provides helper functions to load and prepare data.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> stat386_finalproject_divorce_crime.wrangling <span class="im">import</span> load_data</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> load_data(<span class="st">"Combined_df.csv"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="running-the-streamlit-app" class="level1">
 <h1>Running the Streamlit App</h1>
 <p>The easiest way to explore the data is through the Streamlit app. You can access it by running the following in a terminal.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">streamlit</span> run src/stat386_finalproject_divorce_crime/app.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">streamlit</span> run src/stat386_finalproject_divorce_crime/app.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This launches an interactive dashboard in your browser.</p>
 <hr>
 </section>
-<section id="using-the-streamlit-interface" class="level1">
-<h1>Using the Streamlit Interface</h1>
-<section id="sidebar-controls" class="level3">
-<h3 class="anchored" data-anchor-id="sidebar-controls">Sidebar Controls</h3>
-<p>Users can select:</p>
+<section id="see-the-affect-of-rape-on-marriage-statistics-in-kansas" class="level1">
+<h1>See the affect of Rape on Marriage Statistics in Kansas</h1>
+<p>Make sure the following are selected</p>
 <ul>
-<li>A state</li>
-<li>A crime category</li>
-<li>Metric type (Actual vs Rate)</li>
+<li>State</li>
+<li>Line</li>
+<li>Marriage</li>
+<li>Actual</li>
+<li>Rape</li>
+<li>Kansas</li>
 </ul>
+<p>Note the peaks and valleys of each. Do they align? Or do they seem to be inversely related?</p>
 </section>
-<section id="visualizations" class="level3">
-<h3 class="anchored" data-anchor-id="visualizations">Visualizations</h3>
-<p>The app displays:</p>
+<section id="see-the-affect-of-motor-vehicle-theft-rates-on-divorce-rates-at-the-national-level" class="level1">
+<h1>See the affect of Motor Vehicle Theft Rates on Divorce Rates at the national level</h1>
+<p>Make sure the following are selected - National - Line - Divorce - Rate - Motor Vehicle Theft</p>
+<p>You should see that as motor vehicle theft has increased from year to year, divorce rate has decreased over the same time period.</p>
+</section>
+<section id="see-the-summary-stats-of-linear-regression-models" class="level1">
+<h1>See the summary stats of linear regression models</h1>
 <ul>
-<li>Crime trends over time</li>
-<li>Crime vs divorce comparisons for a single state</li>
-<li>Dynamic updates based on user selections</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="interpreting-the-results" class="level1">
-<h1>Interpreting the Results</h1>
-<p>When exploring the plots, consider:</p>
+<li>Check the box for “Show Regression Model”</li>
+<li>Select a crime</li>
+<li>Select a metric</li>
+<li>Select Divorce</li>
+<li>Select a model
 <ul>
-<li>Long-term crime trends by state</li>
-<li>Differences between crime counts and crime rates</li>
-<li>How divorce trends change alongside crime over time</li>
-<li>Variability across states</li>
+<li>Crime as a function of marriage and divorce</li>
+<li>Marriage as a function of crime</li>
+<li>Divorce as a function of crime</li>
+</ul></li>
 </ul>
+<p>Note the <code>R^2</code> of the model you chose. Also note the coefficients for all variables. Which are positively correlated and which are negatively correlated?</p>
+</section>
+<section id="explore-on-your-own" class="level1">
+<h1>Explore on your own</h1>
+<p>Try playing with all the parameters in the left sidebar on your own. Try to find any correlation (positive or negative) between crime and marriage and divorce.</p>
 
 
 </section>

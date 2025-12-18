@@ -7,51 +7,51 @@ editor: visual
 
 # Introduction
 
-This tutorial walks through how to install, use, and explore the
-**Stat386 Divorce–Crime Analysis Package**.
+This tutorial walks through how to install, use, and explore the **Stat386 Divorce–Crime Analysis Package**.
 
 By the end of this tutorial, you will be able to:
 
-- Install the package from PyPI
-- Load and clean the crime and divorce datasets
-- Understand the structure of the data
-- Run and interact with the Streamlit application
-- Explore trends in crime and divorce over time
+-   Install the package from PyPI
+-   Load and clean the crime and divorce datasets
+-   Understand the structure of the data
+-   Run and interact with the Streamlit application
+-   Explore trends in crime and divorce over time
 
----
+------------------------------------------------------------------------
 
 # Package Overview
 
 The package provides tools for:
 
-- Loading and wrangling FBI crime and divorce data
-- Aggregating monthly crime data to yearly summaries
-- Visualizing trends by state and crime type
-- Exploring relationships between crime and divorce rates
+-   Loading and wrangling FBI crime and divorce data
+-   Aggregating monthly crime data to yearly summaries
+-   Visualizing trends by state and crime type
+-   Exploring relationships between crime and divorce rates
 
 The primary user interface is an interactive **Streamlit app**.
 
----
+------------------------------------------------------------------------
 
 # Installation
 
 ### Prerequisites
 
-- Python 3.9 or newer
-- `pip` installed
+-   Python 3.9 or newer
+-   `pip` installed
 
 ### Install from PyPI
 
-```bash
+``` bash
 pip install stat386-finalproject-divorce-crime
 ```
 
----
+------------------------------------------------------------------------
 
 # Project Structure
-After installation, the project contains: 
 
-```text
+After installation, the project contains:
+
+``` text
 Stat386-FinalProject-Divorce-Crime
 ├─ docs
 |  ├─ documentation.qmd
@@ -70,57 +70,59 @@ Stat386-FinalProject-Divorce-Crime
 │     └─ crime_abbr.json
 ├─ pyproject.toml
 └─ README.md
-
 ```
 
----
-
-# Loading the Data
-
-The package provides helper functions to load and prepare data.
-
-```python
-from stat386_finalproject_divorce_crime.wrangling import load_data
-
-df = load_data("Combined_df.csv")
-df.head()
-```
+------------------------------------------------------------------------
 
 # Running the Streamlit App
 
 The easiest way to explore the data is through the Streamlit app. You can access it by running the following in a terminal.
 
-```bash
+``` bash
 streamlit run src/stat386_finalproject_divorce_crime/app.py
 ```
 
 This launches an interactive dashboard in your browser.
 
----
+------------------------------------------------------------------------
 
-# Using the Streamlit Interface
+# See the affect of Rape on Marriage Statistics in Kansas
 
-### Sidebar Controls
-Users can select:
+Make sure the following are selected
 
-- A state
-- A crime category
-- Metric type (Actual vs Rate)
+- State
+- Line
+- Marriage
+- Actual
+- Rape
+- Kansas
 
-### Visualizations
-The app displays:
+Note the peaks and valleys of each. Do they align? Or do they seem to be inversely related?
 
-- Crime trends over time
-- Crime vs divorce comparisons for a single state
-- Dynamic updates based on user selections
+# See the affect of Motor Vehicle Theft Rates on Divorce Rates at the national level
 
----
+Make sure the following are selected
+- National
+- Line
+- Divorce
+- Rate
+- Motor Vehicle Theft
 
-# Interpreting the Results
+You should see that as motor vehicle theft has increased from year to year, divorce rate has decreased over the same time period.
 
-When exploring the plots, consider:
+# See the summary stats of linear regression models
 
-- Long-term crime trends by state
-- Differences between crime counts and crime rates
-- How divorce trends change alongside crime over time
-- Variability across states
+- Check the box for "Show Regression Model"
+- Select a crime
+- Select a metric
+- Select Divorce
+- Select a model
+  - Crime as a function of marriage and divorce
+  - Marriage as a function of crime
+  - Divorce as a function of crime
+
+Note the R^2 of the model you chose. Also note the coefficients for all variables. Which are positively correlated and which are negatively correlated?
+
+# Explore on your own
+
+Try playing with all the parameters in the left sidebar on your own. Try to find any correlation (positive or negative) between crime and marriage and divorce.

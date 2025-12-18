@@ -5,3 +5,5 @@ matplotlib
 dotenv
 seaborn
 statsmodels
+sklearn
+scikit-learn

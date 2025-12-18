@@ -23,7 +23,9 @@ dependencies = [
     "streamlit",
     "python-dotenv",
     "seaborn",
-    "statsmodels"
+    "statsmodels",
+    "sklearn",
+    "scikit-learn"
 ]
 
 [project.scripts]
