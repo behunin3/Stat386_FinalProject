@@ -9,6 +9,6 @@ This project explores the relationship between divorce rates and FBI crime stati
 ## Quick Start
 
 ```bash
-pip install stat386-finalproject-divorce-crime
+pip install Stat386-FinalProject-Divorce-Crime==0.1.5
 streamlit run src/stat386_finalproject_divorce_crime/app.py
 ```
