@@ -31,11 +31,7 @@ pip install Stat386-FinalProject-Divorce-Crime==0.1.5
 
 # Run
 
-You can run the streamlit app by running this in the terminal:
-
-``` bash
-streamlit run src/stat386_finalproject_divorce_crime/app.py
-```
+You can access the streamlit by going to this [Streamlit Link](https://stat386finalproject-anton-behunin3.streamlit.app/)
 
 ------------------------------------------------------------------------
 

@@ -42,7 +42,7 @@ The primary user interface is an interactive **Streamlit app**.
 ### Install from PyPI
 
 ``` bash
-pip install stat386-finalproject-divorce-crime
+pip install Stat386-FinalProject-Divorce-Crime==0.1.5
 ```
 
 ------------------------------------------------------------------------
@@ -76,13 +76,7 @@ Stat386-FinalProject-Divorce-Crime
 
 # Running the Streamlit App
 
-The easiest way to explore the data is through the Streamlit app. You can access it by running the following in a terminal.
-
-``` bash
-streamlit run src/stat386_finalproject_divorce_crime/app.py
-```
-
-This launches an interactive dashboard in your browser.
+The easiest way to explore the data is through the Streamlit app. You can access it by navigating to this [Link](https://stat386finalproject-anton-behunin3.streamlit.app/)
 
 ------------------------------------------------------------------------
 
@@ -90,38 +84,33 @@ This launches an interactive dashboard in your browser.
 
 Make sure the following are selected
 
-- State
-- Line
-- Marriage
-- Actual
-- Rape
-- Kansas
+-   State
+-   Line
+-   Marriage
+-   Actual
+-   Rape
+-   Kansas
 
 Note the peaks and valleys of each. Do they align? Or do they seem to be inversely related?
 
 # See the affect of Motor Vehicle Theft Rates on Divorce Rates at the national level
 
-Make sure the following are selected
-- National
-- Line
-- Divorce
-- Rate
-- Motor Vehicle Theft
+Make sure the following are selected - National - Line - Divorce - Rate - Motor Vehicle Theft
 
 You should see that as motor vehicle theft has increased from year to year, divorce rate has decreased over the same time period.
 
 # See the summary stats of linear regression models
 
-- Check the box for "Show Regression Model"
-- Select a crime
-- Select a metric
-- Select Divorce
-- Select a model
-  - Crime as a function of marriage and divorce
-  - Marriage as a function of crime
-  - Divorce as a function of crime
+-   Check the box for "Show Regression Model"
+-   Select a crime
+-   Select a metric
+-   Select Divorce
+-   Select a model
+    -   Crime as a function of marriage and divorce
+    -   Marriage as a function of crime
+    -   Divorce as a function of crime
 
-Note the R^2 of the model you chose. Also note the coefficients for all variables. Which are positively correlated and which are negatively correlated?
+Note the R\^2 of the model you chose. Also note the coefficients for all variables. Which are positively correlated and which are negatively correlated?
 
 # Explore on your own
 
