@@ -42,15 +42,33 @@ def national_aggregate(df : pd.DataFrame) -> pd.DataFrame:
 
 
 
-def linear_regression_by_crime_rate(df : pd.DataFrame, crime):
-    # Copy dataframe
-    df = df.sort_values(["state","year"]).copy()
+def linear_regression_by_crime_rate(df: pd.DataFrame, crime: str):
 
-    model = smf.ols(f"{crime} ~ marriage_rate_per_1000 + divorce_rate_per_1000 + C(state) + C(year)",
-                    data = df).fit(
-                        cob_type="cluster",
-                        cov_kwds={"groups": df["state"]}
-                    )
+    # Define variables used in model
+    vars_needed = [
+        crime,
+        "marriage_rate_per_1000",
+        "divorce_rate_per_1000",
+        "state",
+        "year"
+    ]
+
+    # Drop missing rows FIRST
+    df_model = (
+        df[vars_needed]
+        .dropna()
+        .sort_values(["state", "year"])
+        .copy()
+    )
+
+    model = smf.ols(
+        f"{crime} ~ marriage_rate_per_1000 + divorce_rate_per_1000 + C(state) + C(year)",
+        data=df_model
+    ).fit(
+        cov_type="cluster",
+        cov_kwds={"groups": df_model["state"]}
+    )
+
     return model
 
 def linear_regression_by_marriage_divorce(df : pd.DataFrame, marriage_true : bool):
@@ -69,7 +87,7 @@ def linear_regression_by_marriage_divorce(df : pd.DataFrame, marriage_true : boo
 
     model = smf.ols(f"{model_base} {model_assumptions}",
                     data = df).fit(
-                        cob_type="cluster",
+                        cov_type="cluster",
                         cov_kwds={"groups": df["state"]}
                     )
     
